@@ -63,7 +63,7 @@
 	        	<div class="large-4 medium-4 columns">
 	        		<p><a href="http://github.com/catlover91/ODUCS418">Github Repo</a><br/>You can find the code for this website here.</p>
 	        	</div>
-					</div>
+            </div>
       	</div>
       </div>
     </div>
@@ -75,34 +75,9 @@
     -->
 
     <div class="row">
-
-      <!--
-      ==========================================================================
-                                      Log In
-      ==========================================================================
-      -->
-
-      <div class="large-4 medium-12 columns">
-        <div class="callout panel">
-				  <input type="text" placeholder="Username"/><br/>
-				  <input type="text" placeholder="Password"/><br/>
-				  <a href="#" class="small button">Log in</a>
-        </div>
-      </div>
-
-      <!--
-      ==========================================================================
-                                  Read Questions
-      ==========================================================================
-      -->
-
-      <div class="large-8 medium-12 columns">
-        <div class="panel">
-          <?php
-            echo
-          ?>
-        </div>
-      </div>
+        
+        <script type="text/javascript" src="server.php"></script>
+        
     </div>
 
   </body>
