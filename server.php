@@ -7,7 +7,7 @@
         $data = htmlspecialchars($data);
         return $data;
     }
-    
+
     $sqlservername = "localhost";
     $sqlusername = "admin";
     $sqlpassword = "spring2015";
@@ -33,11 +33,11 @@
     } else {
         echo "Error creating database: ".mysqli_error($conn);
     }
-    
+
     //=================   Create User Table  ===============================
 
     $sql = "CREATE TABLE users (
-    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
+    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(30) NOT NULL,
     password VARCHAR(30) NOT NULL
     )";
@@ -47,8 +47,8 @@
     } else {
         echo "Error creating table: ".$conn->error;
     }
-    
-    $userfile = fopen("users.txt", r+);
+
+    $userfile = fopen("users.txt", "r+");
     $temp = fread($userfile, filesize($userfile));
     fclose($userfile);
     $filecontent = explode($temp);
@@ -66,7 +66,7 @@
     //=================   Create Questions Table  ==========================
 
     $sql = "CREATE TABLE questions (
-    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
+    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     asker_id INT(6) UNSIGNED NOT NULL,
     title VARCHAR(30) NOT NULL,
     content VARCHAR(500) NOT NULL,
@@ -82,7 +82,7 @@
     //=================   Create answers Table  ============================
 
     $sql = "CREATE TABLE answers (
-    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
+    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     answerer INT(6) UNSIGNED,
     title VARCHAR(30) NOT NULL,
     content VARCHAR(30) NOT NULL,
@@ -90,13 +90,13 @@
     best VARCHAR(1)
     )";
 
-    
+
     if($conn->query($sql) === TRUE){
         echo "Table answers created successfully";
     } else {
         echo "Error creating table: " . $conn->error;
     }
-    
+
     //==========================================================================
     //                              Verify posts
     //==========================================================================
@@ -105,9 +105,9 @@
         if (empty($_POST["username"])) {
             $nameErr = "Username is required";
         } else {
-            $tempName = cleanse($_POST["username"])
-            if (!preg_match("/^[a-zA-Z ]*$/", $tempName)) {
-                $nameErr = "Only letters and white space allowed"; 
+            $tempName = cleanse($_POST["username"]);
+            if(!preg_match("/^[a-zA-Z ]*$/", $tempName)) {
+                $nameErr = "Only letters and white space allowed";
             } else {
                 $sql = "SELECT name, id, password FROM users WHERE name='".$tempname."'";
                 $result = $conn->query($sql);
@@ -129,16 +129,16 @@
                 }
             }
         }
-        
-        
+
+
         if (empty($_POST["qtitle"])) {
             $qtitleErr = "Title is required";
-        } 
-        
+        }
+
         if (empty($_POST["qcontent"])) {
             $qcontentErr = "Content is required";
-        } 
-        
+        }
+
         if (!empty($_POST["qtitle"]) && !empty($_POST["qcontent"])) {
             if (!empty($_POST["username"]) && !empty($_POST["password"])) {
                 $sql = "SELECT content, title FROM questions WHERE title='".$_POST["qtitle"]."'";
@@ -169,7 +169,7 @@
                 $qtitleErr = "You must be logged in to ask questions!";
             }
         }
-        
+
         if (!empty($_POST["atitle"]) && !empty($_POST["acontent"])) {
             if (!empty($_POST["username"]) && !empty($_POST["password"])) {
                 $sql = "SELECT content, title FROM answers WHERE title='".$_POST["atitle"]."'";
@@ -201,12 +201,12 @@
             }
         }
     }
-    
-      
+
+
     //==========================================================================
     //                                  Log In
     //==========================================================================
-    
+
 
     echo "<div class=\"large-4 medium-12 columns\">
         <form method=\"post\ action=\"".htmlspecialchars($_SERVER["PHP_SELF"])."\">
@@ -218,16 +218,16 @@
         </form>
     </div>";
 
-    
+
     //==========================================================================
     //                              Read Questions
     //==========================================================================
-    
+
 
 
     echo "<div class=\"large-8 medium-12 columns\">
-        <div class=\"panel\">";      
-        
+        <div class=\"panel\">";
+
     $sql = "SELECT content, title FROM questions";
     $qresult = $conn->query($sql);
     if ($qresult->num_rows > 0) {
@@ -253,7 +253,7 @@
                 echo substr($questionContent, 0, 140)."...";
             }
 
-            echo "</p>".    
+            echo "</p>".
             "</a>";
 
             //=============================================================================
@@ -267,7 +267,7 @@
             //                                  Answer question
             //=============================================================================
 
-            echo 
+            echo
                 "<form method=\"post\" action=\"".htmlspecialchars($_SERVER["PHP_SELF"])."\">
                     <h3>Answer question</h3>
                     <input type=\"text\" placeholder=\"Title\" name=\"qtitle\"/><br/>
@@ -306,7 +306,7 @@
                                     //if already voted
                                     //  display vote
                                     //  display vote level
-                                    //else 
+                                    //else
                                     //  display vote level
                                 "</div>".
                                 "<div class=\"small-9 solumns\">".
@@ -332,9 +332,9 @@
             echo "</div>";
         }
     }
-            
-        
-    
+
+
+
     echo "</div></div>";
     //close database
     $conn->close();
